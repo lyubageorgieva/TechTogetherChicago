@@ -18,7 +18,7 @@ export default function App() {
     <>
       <ApplicationProvider {...eva} theme={eva.light}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName='Sign Up'>
+          <Stack.Navigator initialRouteName='Profile'>
               <Stack.Screen name="Sign Up" component={SignUpScreen} />
               <Stack.Screen name="Sign In" component={SignInScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
