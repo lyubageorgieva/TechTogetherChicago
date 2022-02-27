@@ -3,12 +3,25 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import React, { useState } from 'react';
 import { Input, Text, Button} from '@ui-kitten/components';
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInScreen = ({ navigation }) => {
 
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+
+    const onLogin = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Profile')
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error)
+    });
+    }
 
     return (
         <KeyboardAwareScrollView>
@@ -16,10 +29,10 @@ const SignInScreen = ({ navigation }) => {
             <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false} >
                 <View style={styles.content}>
                     <Text style={styles.primaryText}  category='h5'>LOGIN</Text>
-                    <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Username' onChangeText={username => setUsername(username)} />
+                    <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Email' onChangeText={email => setEmail(email)} />
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Password' secureTextEntry={secureTextEntry} onChangeText={password => setPassword(password)} />
                     <View style={styles.buttonBox}>
-                        <Button style={styles.buttonColors}>LOGIN</Button>
+                        <Button onPress={onLogin} style={styles.buttonColors}>LOGIN</Button>
                     </View>
                 </View>
             </KeyboardAwareScrollView>
