@@ -25,10 +25,14 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <KeyboardAwareScrollView>
-            <Image style={styles.header} source={require('../../assets/ChicagoPic2.jpg')}/>
+            <View style={styles.content}>
+                <Image style={styles.header} source={require('../../assets/Chicago4.jpg')}/>
+            </View>
             <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false} >
                 <View style={styles.content}>
-                    <Text style={styles.primaryText}  category='h5'>LOGIN</Text>
+                    <Text style={styles.logoName}  category='h1'>Exploro</Text>
+                    <Image style={styles.logo} source={require('../../assets/Exploro.png')}/>
+                    <Text style={styles.primaryText}  category='s1'>LOGIN</Text>
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Email' onChangeText={email => setEmail(email)} />
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Password' secureTextEntry={secureTextEntry} onChangeText={password => setPassword(password)} />
                     <View style={styles.buttonBox}>
@@ -48,14 +52,29 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: 20,
     },
+    logo: {
+        height: 100, 
+        width: 100,
+        paddingTop: 10,
+    },
+    logoName: {
+        fontFamily: "Verdana",
+        paddingTop: 5,
+        paddingBottom: 10,
+    },
     header: {
         height: 250, 
-        width: '100%',
+        width: '90%',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        marginTop: 60,
     },
     primaryText: {
         fontFamily: "Verdana",
         paddingTop: 20,
-        paddingBottom: 30,
+        paddingBottom: 10,
     },
     secondaryText: {
         fontFamily: "Verdana",
@@ -71,7 +90,7 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     buttonColors: {
-        backgroundColor: "#FFA78C",
+        backgroundColor: "#FF9180",
         borderColor: 'transparent',
     },
     buttonBox: {

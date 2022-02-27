@@ -35,16 +35,20 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <KeyboardAwareScrollView>
-            <Image style={styles.header} source={require('../../assets/ChicagoPic1.jpg')}/>
+            <View style={styles.content}>
+                <Image style={styles.header} source={require('../../assets/ChicagoPic1.jpg')}/>
+            </View>
             <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false} >
                 <View style={styles.content}>
-                    <Text style={styles.primaryText}  category='h5'>CREATE AN ACCOUNT</Text>
+                    <Text style={styles.logoName}  category='h1'>Exploro</Text>
+                    <Image style={styles.logo} source={require('../../assets/Exploro.png')}/>
+                    <Text style={styles.primaryText}  category='s1'>CREATE AN ACCOUNT</Text>
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Email' onChangeText={email => setEmail(email)} />
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Password' secureTextEntry={secureTextEntry} onChangeText={password => setPassword(password)} />
                     <View style={styles.buttonBox}>
                         <Button onPress={() => onHandleSignup()} style={styles.buttonColors}>SIGN UP</Button>
                     </View>
-                    <Text style={styles.secondaryText}  category='s2'>Have an Account? </Text>
+                    <Text style={styles.secondaryText}  category='s1'>Have an Account? </Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Sign In')}><Text style={styles.linkColor} category='s1'>Login</Text></TouchableOpacity>
                 </View>
             </KeyboardAwareScrollView>
@@ -60,14 +64,29 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: 20,
     },
-    header: {
-        height: 250, 
-        width: '100%',
+    logoName: {
+        fontFamily: "Verdana",
+        paddingTop: 5,
+        paddingBottom: 10,
     },
     primaryText: {
         fontFamily: "Verdana",
         paddingTop: 20,
-        paddingBottom: 30,
+        paddingBottom: 10,
+    },
+    logo: {
+        height: 100, 
+        width: 100,
+        paddingTop: 10,
+    },
+    header: {
+        height: 250, 
+        width: '90%',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        marginTop: 60,
     },
     secondaryText: {
         fontFamily: "Verdana",
@@ -83,7 +102,7 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     buttonColors: {
-        backgroundColor: "#FFA78C",
+        backgroundColor: "#FF9180",
         borderColor: 'transparent',
     },
     buttonBox: {
