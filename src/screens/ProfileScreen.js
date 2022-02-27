@@ -1,17 +1,133 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Button,
+  Icon,
+  Layout,
+  Divider,
+  Text
+} from '@ui-kitten/components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import Tags from "react-native-tags";
 
-const ProfileScreen = () => {
-    return (
-        <View>
-            <Text></Text>
-            <Text>Profile screen</Text>
-        </View>
-    );
+
+const HeartIcon = (props) => (
+  <Icon {...props} name='heart'/>
+);
+
+
+export default ProfileScreen = () => {
+
+  const [value, setValue] = React.useState('');
+  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const [selectIndex, setSelectIndex] = React.useState(undefined);
+  const [menuVisible, setMenuVisible] = React.useState(false);
+  const [tooltipVisible, setTooltipVisible] = React.useState(false);
+
+  const saveButton = () => (
+    <Button
+      style={styles.button}
+      accessoryLeft={HeartIcon}>
+      SAVE
+    </Button>
+  );
+
+  return (
+    <KeyboardAwareScrollView style={styles.page}>
+    <React.Fragment>
+
+    <IconRegistry icons={EvaIconsPack} />
+    <ApplicationProvider {...eva} theme={eva.light}>
+        
+    <Text style={styles.title} category='h6'>Please choose your favorite attractions</Text>
+
+    <Text style={styles.title} appearance='hint'>Enter you favorite places to visit (separate by spaces)</Text>
+ 
+   
+    <Layout style={styles.inputContainer} level='1'>
+    
+    <Tags 
+        initialText="monkey"
+        textInputProps={styles.tag, {
+        placeholder: "Any type of animal"
+        }}
+        initialTags={["dog", "cat", "chicken"]}
+        onChangeTags={tags => console.log(tags)}
+        onTagPress={(index, tagLabel, event, deleted) =>
+        console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
+        }
+        createTagOnString={[",", ".", " ", "\r"]}
+        inputStyle={styles.inputContainer, { backgroundColor: '#fff' }}
+        inputContainerStyle={styles.inputContainer}
+        containerStyle={styles.container}
+        renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
+        <TouchableOpacity style={{borderRadius: 10, margin: 5, backgroundColor: "#FFCB87"}} key={`${tag}-${index}`} onPress={onPress}>
+            <Text style={styles.tag}>{tag} x</Text>
+        </TouchableOpacity>
+        )}
+    />
+
+
+    </Layout>
+    <Divider/>
+    <Button
+      style={styles.button}
+      accessoryLeft={HeartIcon}>
+      SAVE
+    </Button>
+  
+    </ApplicationProvider>
+
+
+    </React.Fragment>
+    </KeyboardAwareScrollView>
+  );
 };
 
-export default ProfileScreen;
-
 const styles = StyleSheet.create({
-    
+  inputContainer: {
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'center'
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  title: {
+    padding: 10,
+    marginTop: 10
+  },
+  button: {
+    margin: 2,
+    backgroundColor: '#FF9180',
+    borderColor: '#FF9180'
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: '#D6D6D6',
+  },
+  tag: {
+    padding: 10,
+    margin: 5,
+    fontFamily: "Verdana",
+    color: "#FFFFFF"
+  },
+  input: {
+    color: '#606060',
+    fontWeight: 'bold',
+  },
+  container: {
+    marginTop: 10,
+    marginBottom: 50,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  page: {
+    fontFamily: "Verdana"
+  }
+  
 });

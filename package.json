@@ -30,7 +30,8 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
-    "react-native-svg": "12.1.1",
+    "react-native-svg": "^12.1.1",
+    "react-native-tags": "^2.2.1",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
