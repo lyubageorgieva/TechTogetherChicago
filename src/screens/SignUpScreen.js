@@ -3,12 +3,35 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import React, { useState } from 'react';
 import { Input, Text, Button} from '@ui-kitten/components';
 
+import firebase from '../config/firebase';
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, collection } from "firebase/firestore";
 
 const SignUpScreen = ({ navigation }) => {
 
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+    
+    const onHandleSignup = () => {
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password).then(async (response) => {
+            const uid = response.user.uid
+            const data = {
+                id: uid,
+                email,
+            };
+            const usersRef = doc(collection(firebase.firestore(), "users"));
+            await setDoc(usersRef, data);
+        })
+        .then((userRecord) => {
+        navigation.navigate('Sign In')
+        })
+        .catch(err => 
+        Alert.alert("You have to fill every field correctly"))
+    };
+
 
     return (
         <KeyboardAwareScrollView>
@@ -16,10 +39,10 @@ const SignUpScreen = ({ navigation }) => {
             <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} scrollEnabled={false} >
                 <View style={styles.content}>
                     <Text style={styles.primaryText}  category='h5'>CREATE AN ACCOUNT</Text>
-                    <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Username' onChangeText={username => setUsername(username)} />
+                    <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Email' onChangeText={email => setEmail(email)} />
                     <Input style={styles.inputContainer} status='basic' autoCapitalize='none' placeholder='Password' secureTextEntry={secureTextEntry} onChangeText={password => setPassword(password)} />
                     <View style={styles.buttonBox}>
-                        <Button style={styles.buttonColors}>SIGN UP</Button>
+                        <Button onPress={() => onHandleSignup()} style={styles.buttonColors}>SIGN UP</Button>
                     </View>
                     <Text style={styles.secondaryText}  category='s2'>Have an Account? </Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Sign In')}><Text style={styles.linkColor} category='s1'>Login</Text></TouchableOpacity>
