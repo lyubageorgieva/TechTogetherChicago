@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import {
   Button,
   Icon,
   Layout,
   Divider,
+  View,
+  OverflowMenu,
+  MenuItem,
+  TopNavigationAction,
+  TopNavigation,
   Text
 } from '@ui-kitten/components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,13 +18,27 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import Tags from "react-native-tags";
 
-
 const HeartIcon = (props) => (
   <Icon {...props} name='heart'/>
 );
 
+const MenuIcon = (props) => (
+    <Icon {...props} name='menu-outline' width={48} height={48}/>
+);
 
-export default ProfileScreen = () => {
+const ProfileIcon = (props) => (
+    <Icon {...props} name='person-outline'/>
+);
+
+const MapIcon = (props) => (
+    <Icon {...props} name='map-outline'/>
+);
+
+const LogoutIcon = (props) => (
+    <Icon {...props} name='log-out'/>
+);
+
+export default ProfileScreen = ({ navigation }) => {
 
   const [value, setValue] = React.useState('');
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
@@ -34,6 +53,29 @@ export default ProfileScreen = () => {
       SAVE
     </Button>
   );
+  
+
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
+
+    const renderMenuAction = () => (
+        <TopNavigationAction icon={MenuIcon} onPress={toggleMenu}/>
+    );
+
+    const renderRightActions = () => (
+    <React.Fragment>
+        <OverflowMenu
+            anchor={renderMenuAction}
+            visible={menuVisible}
+            onBackdropPress={toggleMenu}>
+            <MenuItem onPress={() => navigation.navigate('Profile')} accessoryLeft={ProfileIcon} title='Profile'/>
+            <MenuItem onPress={() => navigation.navigate('Map')} accessoryLeft={MapIcon} title='Map'/>
+            <MenuItem accessoryLeft={LogoutIcon} title='Logout'/>
+        </OverflowMenu>
+    </React.Fragment>
+);
+
 
   return (
     <KeyboardAwareScrollView style={styles.page}>
@@ -41,7 +83,15 @@ export default ProfileScreen = () => {
 
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.light}>
-        
+
+                
+                <TopNavigation
+                alignment='center'
+                // title='Menu Navigation'    
+                accessoryRight={renderRightActions}
+                />
+                
+            
     <Text style={styles.title} category='h6'>Please choose your favorite attractions</Text>
 
     <Text style={styles.title} appearance='hint'>Enter you favorite places to visit (separate by spaces)</Text>
@@ -78,9 +128,10 @@ export default ProfileScreen = () => {
       accessoryLeft={HeartIcon}>
       SAVE
     </Button>
+    
   
     </ApplicationProvider>
-
+    
 
     </React.Fragment>
     </KeyboardAwareScrollView>
