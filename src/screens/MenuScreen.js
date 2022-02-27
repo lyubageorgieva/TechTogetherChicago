@@ -6,6 +6,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 const MenuScreen = () => {
 
+    const listOfPlaces = ['coffee', 'park', 'museums', 'zoo']
+
     //extra code removed for brevity.
 //create a Hook to store our region data.
 const [region, setRegion] = useState({
@@ -19,9 +21,9 @@ const ref = useRef();
 //     ref.current?.getAddressText();
 //     console.log("REF" + ref.current?.getAddressText())
 //   }, []);
-  useEffect(() => {
+useEffect(() => {
     ref.current?.setAddressText('coffee');
-  }, []);
+}, []);
 const [coordinates] = useState([
     {
         latitude: 41.835331,
@@ -31,14 +33,13 @@ const [coordinates] = useState([
         latitude: 41.787663516,
         longitude: -87.576331028,
     },
-  ]);
+]);
 
     const GetLocation  =  (<View></View>
 
     )
 
     return (
-       
         <View style={styles.container}>
         {/* <GetLocation></GetLocation> */}
         <GooglePlacesAutocomplete
@@ -52,7 +53,7 @@ const [coordinates] = useState([
         placeholder='Enter Location'
         renderDescription={row => row.description} // custom description render
         query={{
-        key: 'AIzaSyBguqWA5348wmrzNBjBdsYAknB1njPhIB4',
+        key: 'API KEY',
         language: 'en',
         region: "Chicago",
         radius:50
@@ -62,7 +63,7 @@ const [coordinates] = useState([
             // available options for GoogleMapsPlacesSearch API : https://developers.google.com/places/web-service/search
             rankby: 'distance',
             type: 'restaurant'
-          }}
+        }}
     >    
     </GooglePlacesAutocomplete>
         <MapView
@@ -75,13 +76,13 @@ const [coordinates] = useState([
             longitudeDelta: 0.0421}}
             onRegionChange={this.onRegionChange}>
         <MapViewDirections
-          origin={ref.current?.getAddressText()}
-          destination={coordinates[1]}
-          apikey='AIzaSyBguqWA5348wmrzNBjBdsYAknB1njPhIB4' // insert your API Key here
-          strokeWidth={4}
-          onRegionChangeComplete={(region) => setRegion(region)}
-          lineDashPattern={[0]}
-          strokeColor="#FF9180"
+            origin={ref.current?.getAddressText()}
+            destination={coordinates[1]}
+            apikey='API KEY' // insert your API Key here
+            strokeWidth={4}
+            onRegionChangeComplete={(region) => setRegion(region)}
+            lineDashPattern={[0]}
+            strokeColor="#FF9180"
         />
         <MapView.Marker coordinate={{
         latitude: region.latitude,
@@ -90,21 +91,18 @@ const [coordinates] = useState([
                     description={"description"} />
         <MapView.Marker coordinate={coordinates[1]}  title={"title"}
                     description={"description"}/> 
-          {/* {this.state.markers.map((marker, index) => (
-    <Marker
-      key={index}
-      coordinate={region.latlng}
-      title={region.title}
-      description={region.description}
-    />
-  ))} */}
-        
+            {/* {this.state.markers.map((marker, index) => (
+                <Marker
+                key={index}
+                coordinate={region.latlng}
+                title={region.title}
+                description={region.description}
+                />
+        ))} */}
         </MapView>
-         
         <Text style={styles.text}>Current latitude: {ref.current?.getAddressText()} {region.latitude}</Text>
         <Text style={styles.text}>Current longitude: {region.longitude}</Text>
     </View>
-  
     );
 };
 
