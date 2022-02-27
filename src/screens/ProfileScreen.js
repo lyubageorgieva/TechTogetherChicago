@@ -1,35 +1,23 @@
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import {
   Button,
   Icon,
-  Input,
   Layout,
-  MenuItem,
-  OverflowMenu,
-  Select,
-  SelectItem,
-  Tooltip,
-  View,
+  Divider,
   Text
 } from '@ui-kitten/components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import Tags from "react-native-tags";
-import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
-const StarIcon = (props) => (
-  <Icon {...props} name='star'/>
-);
 
 const HeartIcon = (props) => (
   <Icon {...props} name='heart'/>
 );
 
-const ForwardIcon = (props) => (
-  <Icon {...props} name='arrow-ios-forward'/>
-);
 
 export default ProfileScreen = () => {
 
@@ -48,44 +36,43 @@ export default ProfileScreen = () => {
   );
 
   return (
-      
+    <KeyboardAwareScrollView style={styles.page}>
     <React.Fragment>
 
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.light}>
         
     <Text style={styles.title} category='h6'>Please choose your favorite attractions</Text>
-    
+
+    <Text style={styles.title} appearance='hint'>Enter you favorite places to visit (separate by spaces)</Text>
+ 
+   
     <Layout style={styles.inputContainer} level='1'>
     
-     
-    
+    <Tags 
+        initialText="monkey"
+        textInputProps={styles.tag, {
+        placeholder: "Any type of animal"
+        }}
+        initialTags={["dog", "cat", "chicken"]}
+        onChangeTags={tags => console.log(tags)}
+        onTagPress={(index, tagLabel, event, deleted) =>
+        console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
+        }
+        createTagOnString={[",", ".", " ", "\r"]}
+        inputStyle={styles.inputContainer, { backgroundColor: '#fff' }}
+        inputContainerStyle={styles.inputContainer}
+        containerStyle={styles.container}
+        renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
+        <TouchableOpacity style={{borderRadius: 10, margin: 5, backgroundColor: "#FFCB87"}} key={`${tag}-${index}`} onPress={onPress}>
+            <Text style={styles.tag}>{tag} x</Text>
+        </TouchableOpacity>
+        )}
+    />
 
-<Tags
-    initialText="monkey"
-    textInputProps={{
-      placeholder: "Any type of animal"
-    }}
-    initialTags={["dog", "cat", "chicken"]}
-    onChangeTags={tags => console.log(tags)}
-    onTagPress={(index, tagLabel, event, deleted) =>
-      console.log(index, tagLabel, event, deleted ? "deleted" : "not deleted")
-    }
-    containerStyle={styles.container}
-    inputStyle={{ backgroundColor: "white" }}
-    renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
-      <TouchableOpacity key={`${tag}-${index}`} onPress={onPress}>
-        {/* <Text>{tag}</Text> */}
-        <Button style={styles.tag} size='tiny'>
-      {tag}
-    </Button>
-      </TouchableOpacity>
-    )}
-  />
- 
 
-</Layout>
-
+    </Layout>
+    <Divider/>
     <Button
       style={styles.button}
       accessoryLeft={HeartIcon}>
@@ -96,19 +83,23 @@ export default ProfileScreen = () => {
 
 
     </React.Fragment>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   title: {
     padding: 10,
-    marginTop: 50
+    marginTop: 10
   },
   button: {
     margin: 2,
@@ -120,15 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#D6D6D6',
   },
   tag: {
-    backgroundColor: '#FFCB87',
-    borderColor: '#FFCB87',
-    borderRadius: 10,
     padding: 10,
     margin: 5,
-  },
-  textTag: {
-    color: '#EBEBEB',
-    fontWeight: 'bold',
+    fontFamily: "Verdana",
+    color: "#FFFFFF"
   },
   input: {
     color: '#606060',
@@ -137,9 +123,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     marginBottom: 50,
-    borderRadius: 10,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  page: {
+    fontFamily: "Verdana"
   }
   
 });
