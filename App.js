@@ -10,6 +10,7 @@ import SignInScreen from './src/screens/SignInScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import MenuScreen from './src/screens/MenuScreen';
 import PlaceDetailsScreen from './src/screens/PlaceDetailsScreen';
+import MapScreen from './src/screens/MapScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
               <Stack.Screen name="Profile" component={ProfileScreen} />
               <Stack.Screen name="Menu" component={MenuScreen} />
               <Stack.Screen name="Place Details" component={PlaceDetailsScreen} /> 
+              <Stack.Screen name="Map" component={MapScreen} /> 
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>
