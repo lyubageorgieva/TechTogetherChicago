@@ -10,7 +10,7 @@ Exploro, your virtual travel agent that will plan your itinerary based on your i
 # Getting Started
 
 1. Clone the repository.
-2. Make sure a recent version of Node.js.
+2. Make sure to have a recent version of Node.js.
 3. Download Expo Go app.
 4. `yarn install`
 5. `expo install`
